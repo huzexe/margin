@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Library · Margin</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<script src="/static/js/theme.js"></script>
+<link rel="stylesheet" href="/static/css/fonts.css">
+<link rel="stylesheet" href="/static/css/tokens.css">
+<link rel="stylesheet" href="/static/css/base.css">
+<link rel="stylesheet" href="/static/css/components.css">
+<link rel="stylesheet" href="/static/css/pages.css">
+<script type="module" src="/static/js/library.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">M</span>Margin</a>
+  <nav class="topnav" aria-label="Main">
+    <a href="/" aria-current="page">Library</a>
+    <a href="/settings">Settings</a>
+  </nav>
+  <div class="topbar-end">
+    <button class="btn btn-ghost btn-icon" id="theme-toggle" type="button"></button>
+    <a class="btn btn-primary" href="/notes/new" id="new-note">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New note
+    </a>
+  </div>
+</header>
+
+<main class="page">
+  <div class="library library-page">
+    <aside class="sidebar" aria-label="Subjects">
+      <div class="sidebar-title">Subjects</div>
+      <ul class="subject-list" id="subject-list"></ul>
+      <p class="sidebar-empty" id="subjects-empty" hidden>No subjects yet.</p>
+      <div id="sidebar-add">
+        <button class="btn btn-ghost btn-sm sidebar-add" type="button" id="add-subject">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add subject
+        </button>
+      </div>
+      <div class="sidebar-tags" id="tags-section" hidden>
+        <div class="sidebar-title">Tags</div>
+        <div class="tag-list" id="tag-list" role="group" aria-label="Filter by tag"></div>
+      </div>
+    </aside>
+
+    <section class="library-main" aria-labelledby="list-heading">
+      <h1 class="library-heading" id="list-heading">All notes</h1>
+      <div class="library-head">
+        <label class="search">
+          <span class="visually-hidden">Search notes</span>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input class="input" type="search" id="search" placeholder="Search notes" maxlength="200" autocomplete="off">
+        </label>
+        <label>
+          <span class="visually-hidden">Sort by</span>
+          <select class="select select-auto" id="sort">
+            <option value="updated">Last edited</option>
+            <option value="created">Created</option>
+            <option value="title">Title</option>
+          </select>
+        </label>
+      </div>
+      <div id="list-area" aria-live="polite"></div>
+    </section>
+  </div>
+</main>
+
+</body>
+</html>
