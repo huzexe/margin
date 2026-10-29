@@ -22,8 +22,6 @@ This guide assumes no technical experience. Installing takes about **10–15 min
 - A **Google account** (for the free Gemini API key that *Enhance notes* uses)
 - About **400 MB** of free disk space
 
-> **Note:** this GitHub repository is **private**. To download it you must be signed in to a GitHub account that has access to it.
-
 ### Step A: Get your free Gemini API key (Windows and Linux)
 
 1. Open **https://aistudio.google.com** and sign in with your Google account.
@@ -45,7 +43,7 @@ Treat the key like a password: don't share it or post it anywhere. If it ever le
 
 **Step B2: Download Margin**
 
-1. Open the Margin page on GitHub: **https://github.com/muhammadhuzaifa777/margin** (signed in).
+1. Open the Margin page on GitHub: **https://github.com/huzexe/margin**
 2. Click the green **Code** button, then **Download ZIP**.
 3. Open your **Downloads** folder, right-click **margin-main.zip** and choose **Extract All…**, then **Extract**.
 4. Move the extracted **margin-main** folder to your **Documents** folder and rename it to **Margin**.
@@ -96,11 +94,11 @@ Check the Python version with `python3 --version`: it must be **3.11 or newer**.
 
 **Step B2: Download Margin**
 
-Either sign in to GitHub on the website, click **Code → Download ZIP**, and extract it into your home folder as `Margin`, or use the terminal (signed in with the GitHub CLI `gh auth login`):
+Either open **https://github.com/huzexe/margin**, click **Code → Download ZIP**, and extract it into your home folder as `Margin`, or use the terminal:
 
 ```bash
 cd ~
-gh repo clone muhammadhuzaifa777/margin Margin
+git clone https://github.com/huzexe/margin.git Margin
 ```
 
 **Step B3: Run the installer**
