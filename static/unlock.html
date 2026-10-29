@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Unlock · Margin</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<script src="/static/js/theme.js"></script>
+<link rel="stylesheet" href="/static/css/fonts.css">
+<link rel="stylesheet" href="/static/css/tokens.css">
+<link rel="stylesheet" href="/static/css/base.css">
+<link rel="stylesheet" href="/static/css/components.css">
+<link rel="stylesheet" href="/static/css/pages.css">
+<script type="module" src="/static/js/unlock.js"></script>
+</head>
+<body>
+<main class="page unlock-page">
+  <form class="unlock-card" id="unlock-form">
+    <div class="brand"><span class="brand-mark" aria-hidden="true">M</span>Margin</div>
+    <label class="field">
+      <span class="field-label">Enter your PIN</span>
+      <input class="input unlock-pin" id="pin" type="password" inputmode="numeric" autocomplete="current-password" maxlength="100" required autofocus>
+    </label>
+    <p class="field-error" id="unlock-error" hidden></p>
+    <button class="btn btn-primary" type="submit" id="unlock-submit">Unlock</button>
+    <p class="field-hint">This device stays unlocked for 30 days.</p>
+  </form>
+</main>
+</body>
+</html>
