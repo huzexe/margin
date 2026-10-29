@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Settings · Margin</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<script src="/static/js/theme.js"></script>
+<link rel="stylesheet" href="/static/css/fonts.css">
+<link rel="stylesheet" href="/static/css/tokens.css">
+<link rel="stylesheet" href="/static/css/base.css">
+<link rel="stylesheet" href="/static/css/components.css">
+<link rel="stylesheet" href="/static/css/pages.css">
+<script type="module" src="/static/js/settings.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">M</span>Margin</a>
+  <nav class="topnav" aria-label="Main">
+    <a href="/">Library</a>
+    <a href="/settings" aria-current="page">Settings</a>
+  </nav>
+  <div class="topbar-end">
+    <button class="btn btn-ghost btn-icon" id="theme-toggle" type="button"></button>
+    <a class="btn btn-primary" href="/notes/new">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New note
+    </a>
+  </div>
+</header>
+
+<main class="page settings-page">
+  <h1 class="settings-title">Settings</h1>
+
+  <section class="settings-card" aria-labelledby="defaults-h">
+    <h2 id="defaults-h">Default options for new notes</h2>
+    <p class="field-hint">New notes start with these. You can still change them on each note.</p>
+    <div class="settings-row" role="group" aria-label="Include">
+      <label class="check"><input type="checkbox" id="def-simplify"> Simplify</label>
+      <label class="check"><input type="checkbox" id="def-diagrams"> Diagrams</label>
+      <label class="check"><input type="checkbox" id="def-flashcards"> Flashcards</label>
+      <label class="check"><input type="checkbox" id="def-applications"> Applications</label>
+    </div>
+    <div class="settings-row">
+      <span class="toolbar-label" id="def-detail-label">Detail</span>
+      <div class="segmented" role="group" aria-labelledby="def-detail-label" id="def-detail">
+        <button type="button" data-value="concise" aria-pressed="false">Concise</button>
+        <button type="button" data-value="standard" aria-pressed="true">Standard</button>
+        <button type="button" data-value="detailed" aria-pressed="false">Detailed</button>
+      </div>
+      <span class="save-status" id="defaults-status" aria-live="polite"></span>
+    </div>
+  </section>
+
+  <section class="settings-card" aria-labelledby="theme-h">
+    <h2 id="theme-h">Appearance</h2>
+    <div class="settings-row">
+      <div class="segmented" role="group" aria-labelledby="theme-h" id="theme-choice">
+        <button type="button" data-value="system" aria-pressed="true">Match system</button>
+        <button type="button" data-value="light" aria-pressed="false">Light</button>
+        <button type="button" data-value="dark" aria-pressed="false">Dark</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="settings-card" aria-labelledby="phone-h">
+    <h2 id="phone-h">Phone access</h2>
+    <div id="phone-panel"><p class="field-hint">Checking…</p></div>
+  </section>
+
+  <section class="settings-card" aria-labelledby="backup-h">
+    <h2 id="backup-h">Backup</h2>
+    <p class="field-hint">Saves all notes, subjects and these settings in one file. Keep a copy somewhere safe, for example on a USB drive or in cloud storage.</p>
+    <div class="settings-row">
+      <a class="btn" href="/api/backup" download id="backup-download">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>Download backup
+      </a>
+      <span class="field-hint" id="backup-summary"></span>
+    </div>
+  </section>
+
+  <section class="settings-card" aria-labelledby="restore-h">
+    <h2 id="restore-h">Restore</h2>
+    <p class="field-hint">Load notes from a Margin backup file.</p>
+    <div class="settings-row">
+      <label class="btn" for="restore-file">Choose backup file…</label>
+      <input type="file" id="restore-file" accept=".json,application/json" class="visually-hidden">
+      <span class="field-hint" id="restore-file-name"></span>
+    </div>
+    <div id="restore-panel"></div>
+  </section>
+</main>
+
+</body>
+</html>
