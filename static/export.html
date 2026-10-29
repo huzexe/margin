@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Export PDF · Margin</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<script src="/static/js/theme.js"></script>
+<link rel="stylesheet" href="/static/css/fonts.css">
+<link rel="stylesheet" href="/static/css/tokens.css">
+<link rel="stylesheet" href="/static/css/base.css">
+<link rel="stylesheet" href="/static/css/components.css">
+<link rel="stylesheet" href="/static/css/pages.css">
+<script type="module" src="/static/js/export.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">M</span>Margin</a>
+  <nav class="topnav" aria-label="Main">
+    <a href="/">Library</a>
+    <a href="/settings">Settings</a>
+  </nav>
+  <div class="topbar-end">
+    <button class="btn btn-ghost btn-icon" id="theme-toggle" type="button"></button>
+  </div>
+</header>
+
+<main class="page export-page">
+  <div class="note-bar">
+    <a class="back-link" href="/" id="back-link">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Back to note
+    </a>
+  </div>
+  <div id="load-error"></div>
+
+  <div class="export-layout" id="export" hidden>
+    <aside class="export-settings" aria-labelledby="export-heading">
+      <h1 class="export-heading" id="export-heading">Export PDF</h1>
+      <p class="export-note-title" id="note-title"></p>
+
+      <fieldset class="export-group">
+        <legend class="toolbar-label">Include</legend>
+        <label class="check"><input type="checkbox" id="set-toc" checked> Table of contents</label>
+        <label class="check" id="set-flashcards-row"><input type="checkbox" id="set-flashcards" checked> Flashcards</label>
+        <label class="check"><input type="checkbox" id="set-rough"> Original rough notes</label>
+      </fieldset>
+
+      <div class="export-group">
+        <span class="toolbar-label" id="size-label">Text size</span>
+        <div class="segmented" role="group" aria-labelledby="size-label" id="set-size">
+          <button type="button" data-value="small" aria-pressed="false">Small</button>
+          <button type="button" data-value="medium" aria-pressed="true">Medium</button>
+          <button type="button" data-value="large" aria-pressed="false">Large</button>
+        </div>
+      </div>
+
+      <div class="export-group">
+        <span class="toolbar-label" id="margins-label">Margins</span>
+        <div class="segmented" role="group" aria-labelledby="margins-label" id="set-margins">
+          <button type="button" data-value="narrow" aria-pressed="false">Narrow</button>
+          <button type="button" data-value="normal" aria-pressed="true">Normal</button>
+          <button type="button" data-value="wide" aria-pressed="false">Wide</button>
+        </div>
+      </div>
+
+      <p class="field-hint">A4 · page numbers in the footer</p>
+      <p class="field-hint" id="export-hint" hidden></p>
+
+      <button class="btn btn-primary export-download" type="button" id="download" disabled>
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>Download PDF
+      </button>
+      <p class="field-hint" id="export-info" aria-live="polite"></p>
+    </aside>
+
+    <section class="pane export-preview" aria-labelledby="preview-label">
+      <div class="pane-head">
+        <span class="pane-title" id="preview-label">Preview</span>
+        <a class="pane-meta" id="open-preview" href="#" target="_blank" rel="noopener" hidden>Open in new tab</a>
+      </div>
+      <div class="progress" id="preview-progress" role="progressbar" aria-label="Preparing preview" hidden></div>
+      <div class="export-frame-wrap">
+        <iframe id="preview" title="PDF preview" hidden></iframe>
+        <p class="status-line export-status" id="preview-status">Preparing preview…</p>
+      </div>
+    </section>
+  </div>
+</main>
+
+</body>
+</html>
