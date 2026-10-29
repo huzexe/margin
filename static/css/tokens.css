@@ -1,0 +1,106 @@
+/* Design tokens: every color, font and spacing value used by the app.
+   Change a value here and it updates everywhere. */
+
+:root {
+  color-scheme: light;
+
+  /* Surfaces */
+  --paper: #FAF8F3;
+  --surface: #FFFFFF;
+  --surface-2: #F3F0E8;
+  --rule: #E5E0D5;
+  --rule-strong: #D3CDBF;
+
+  /* Text */
+  --ink: #1F2328;
+  --ink-2: #3D4148;
+  --muted: #6B6F76;
+
+  /* Accent (used sparingly: primary actions, links, focus) */
+  --accent: #2F6F62;
+  --accent-hover: #265B50;
+  --accent-soft: #E7F0ED;
+  --on-accent: #FFFFFF;
+
+  --danger: #A4372E;
+  --danger-soft: #F7E8E6;
+
+  /* Callouts: background / left border / label */
+  --definition-bg: #EEF3EC;  --definition-line: #8BA787;  --definition-label: #4C6A49;
+  --formula-bg: #EDF0F4;     --formula-line: #8B98AA;     --formula-label: #4B5A6E;
+  --example-bg: #F6F0E3;     --example-line: #C4A877;     --example-label: #7A6232;
+  --takeaway-bg: #E7F0ED;    --takeaway-line: #2F6F62;    --takeaway-label: #2F6F62;
+  --verify-bg: #FBF1DE;      --verify-line: #C98A1B;      --verify-label: #8A5D0E;
+
+  --code-bg: #F3F0E8;
+
+  /* Type */
+  --font-ui: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-read: "Source Serif 4", Georgia, "Times New Roman", serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --text-xs: 0.75rem;   /* 12 */
+  --text-sm: 0.8125rem; /* 13 */
+  --text-md: 0.875rem;  /* 14 */
+  --text-lg: 1rem;      /* 16 */
+  --text-xl: 1.25rem;   /* 20 */
+  --text-2xl: 1.625rem; /* 26 */
+
+  /* Spacing (4px scale) */
+  --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
+  --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
+
+  --radius: 4px;
+  --radius-lg: 6px;
+  --focus: 0 0 0 2px var(--paper), 0 0 0 4px var(--accent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #1A1917;
+    --surface: #222120;
+    --surface-2: #2A2926;
+    --rule: #34322E;
+    --rule-strong: #47443E;
+    --ink: #ECE8E0;
+    --ink-2: #CFCAC0;
+    --muted: #9B978E;
+    --accent: #6FB3A3;
+    --accent-hover: #86C2B4;
+    --accent-soft: #233430;
+    --on-accent: #10201C;
+    --danger: #E08A80;
+    --danger-soft: #3A2422;
+    --definition-bg: #232B22;  --definition-line: #6E8C6A;  --definition-label: #A9C4A5;
+    --formula-bg: #22262D;     --formula-line: #6F7D90;     --formula-label: #A8B5C7;
+    --example-bg: #2D281E;     --example-line: #A68C5C;     --example-label: #D6BE8E;
+    --takeaway-bg: #213330;    --takeaway-line: #6FB3A3;    --takeaway-label: #8CCABB;
+    --verify-bg: #33291A;      --verify-line: #C98A1B;      --verify-label: #E4B566;
+    --code-bg: #2A2926;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #1A1917;
+  --surface: #222120;
+  --surface-2: #2A2926;
+  --rule: #34322E;
+  --rule-strong: #47443E;
+  --ink: #ECE8E0;
+  --ink-2: #CFCAC0;
+  --muted: #9B978E;
+  --accent: #6FB3A3;
+  --accent-hover: #86C2B4;
+  --accent-soft: #233430;
+  --on-accent: #10201C;
+  --danger: #E08A80;
+  --danger-soft: #3A2422;
+  --definition-bg: #232B22;  --definition-line: #6E8C6A;  --definition-label: #A9C4A5;
+  --formula-bg: #22262D;     --formula-line: #6F7D90;     --formula-label: #A8B5C7;
+  --example-bg: #2D281E;     --example-line: #A68C5C;     --example-label: #D6BE8E;
+  --takeaway-bg: #213330;    --takeaway-line: #6FB3A3;    --takeaway-label: #8CCABB;
+  --verify-bg: #33291A;      --verify-line: #C98A1B;      --verify-label: #E4B566;
+  --code-bg: #2A2926;
+}
