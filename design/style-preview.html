@@ -1,0 +1,539 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Margin · Style preview</title>
+<!-- Preview only: in Phase 1 fonts and libraries are bundled into static/vendor so the app works offline. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<link rel="stylesheet" href="../static/css/tokens.css">
+<link rel="stylesheet" href="../static/css/base.css">
+<link rel="stylesheet" href="../static/css/components.css">
+<style>
+  /* Layout for this preview page only */
+  .preview { max-width: 1240px; margin: 0 auto; padding: var(--s6) var(--s5) var(--s8); }
+  .preview > section { margin-bottom: var(--s7); }
+  .preview-head { margin-bottom: var(--s6); }
+  .preview-head h1 { font-size: var(--text-2xl); margin-bottom: var(--s2); }
+  .preview-head p { color: var(--muted); max-width: 60ch; }
+  .preview-label { font-size: var(--text-xs); font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); margin-bottom: var(--s3); }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3); }
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--s5); }
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: var(--s3); }
+  .swatch { border: 1px solid var(--rule); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+  .swatch-color { height: 44px; border-bottom: 1px solid var(--rule); }
+  .swatch-name { padding: var(--s2); font-size: var(--text-sm); }
+  .swatch-name span { display: block; color: var(--muted); font-family: var(--font-mono); font-size: var(--text-xs); }
+  .type-ui { font-family: var(--font-ui); }
+  .type-read { font-family: var(--font-read); font-size: 18px; line-height: 1.6; }
+  .type-mono { font-family: var(--font-mono); font-size: 14px; }
+  .card { padding: var(--s4); border: 1px solid var(--rule); border-radius: var(--radius-lg); background: var(--surface); }
+  .stack { display: grid; gap: var(--s3); align-content: start; }
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="#"><span class="brand-mark" aria-hidden="true">M</span>Margin</a>
+  <nav class="topnav" aria-label="Main">
+    <a href="#library" aria-current="page">Library</a>
+    <a href="#note">Settings</a>
+  </nav>
+  <div class="topbar-end">
+    <button class="btn btn-ghost btn-icon" id="theme-toggle" type="button" aria-label="Switch to dark mode">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg>
+    </button>
+    <button class="btn btn-primary" type="button">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New note
+    </button>
+  </div>
+</header>
+
+<main class="preview">
+
+  <div class="preview-head">
+    <h1>Style preview</h1>
+    <p>Phase 0: colors, type and components for review. Controls on this page are for display only. Use the moon button to check dark mode, and narrow the window to see the mobile layout.</p>
+  </div>
+
+  <!-- Palette -->
+  <section aria-labelledby="palette-h">
+    <h2 id="palette-h" class="preview-label">Palette</h2>
+    <div class="swatches">
+      <div class="swatch"><div class="swatch-color" style="background:var(--paper)"></div><div class="swatch-name">Paper<span>#FAF8F3</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--surface)"></div><div class="swatch-name">Surface<span>#FFFFFF</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--ink)"></div><div class="swatch-name">Ink<span>#1F2328</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--muted)"></div><div class="swatch-name">Muted<span>#6B6F76</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--rule)"></div><div class="swatch-name">Rule<span>#E5E0D5</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--accent)"></div><div class="swatch-name">Accent<span>#2F6F62</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--definition-bg)"></div><div class="swatch-name">Definition<span>sage</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--formula-bg)"></div><div class="swatch-name">Formula<span>slate</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--example-bg)"></div><div class="swatch-name">Example<span>sand</span></div></div>
+      <div class="swatch"><div class="swatch-color" style="background:var(--verify-bg)"></div><div class="swatch-name">Please verify<span>amber</span></div></div>
+    </div>
+  </section>
+
+  <!-- Type -->
+  <section aria-labelledby="type-h">
+    <h2 id="type-h" class="preview-label">Typography</h2>
+    <div class="grid-2">
+      <div class="card stack">
+        <div class="field-hint">Interface · IBM Plex Sans</div>
+        <div class="type-ui" style="font-size:var(--text-2xl);font-weight:600">Binary Search</div>
+        <div class="type-ui">Menus, buttons, labels and lists use a clean sans-serif at 14px.</div>
+      </div>
+      <div class="card stack">
+        <div class="field-hint">Notes and PDF · Source Serif 4</div>
+        <div class="type-read">Binary search finds a value in a sorted array by repeatedly halving the part still left to check.</div>
+      </div>
+      <div class="card stack">
+        <div class="field-hint">Code · IBM Plex Mono</div>
+        <div class="type-mono">mid = (low + high) // 2</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Controls -->
+  <section aria-labelledby="controls-h">
+    <h2 id="controls-h" class="preview-label">Controls</h2>
+    <div class="grid-2">
+      <div class="card stack">
+        <div class="row">
+          <button class="btn btn-primary" type="button">Enhance notes</button>
+          <button class="btn" type="button">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>Download PDF
+          </button>
+          <button class="btn btn-ghost" type="button">Cancel</button>
+          <button class="btn btn-danger" type="button">Delete</button>
+        </div>
+        <div class="row">
+          <button class="btn btn-primary" type="button" disabled>Enhancing…</button>
+          <button class="btn btn-sm" type="button">Small</button>
+        </div>
+      </div>
+      <div class="card stack">
+        <label class="field">
+          <span class="field-label">Topic</span>
+          <input class="input" type="text" placeholder="e.g. Binary search">
+        </label>
+        <div class="field" data-subject-picker>
+          <label class="field-label" for="subject-a">Subject</label>
+          <select class="select" id="subject-a"></select>
+        </div>
+        <div class="row">
+          <label class="check"><input type="checkbox" checked> Diagrams</label>
+          <label class="check"><input type="checkbox"> Flashcards</label>
+        </div>
+        <div class="segmented" role="group" aria-label="Detail level" data-segmented>
+          <button type="button" aria-pressed="false">Concise</button>
+          <button type="button" aria-pressed="true">Standard</button>
+          <button type="button" aria-pressed="false">Detailed</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Library -->
+  <section id="library" aria-labelledby="library-h">
+    <h2 id="library-h" class="preview-label">Library</h2>
+    <div class="library">
+      <aside class="sidebar">
+        <div class="sidebar-title">Subjects</div>
+        <ul class="subject-list" id="subject-list"></ul>
+        <p class="sidebar-empty" id="subjects-empty">No subjects yet.</p>
+        <div data-subject-picker data-sidebar>
+          <button class="btn btn-ghost btn-sm sidebar-add" type="button" data-open-add>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Add subject
+          </button>
+        </div>
+      </aside>
+      <div class="library-main">
+        <div class="library-head">
+          <label class="search">
+            <span class="visually-hidden">Search notes</span>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input class="input" type="search" placeholder="Search notes">
+          </label>
+          <select class="select" style="width:auto" aria-label="Sort"><option>Last edited</option><option>Created</option><option>Title</option></select>
+        </div>
+        <ul class="note-list">
+          <li><a class="note-row" href="#note"><span><span class="note-row-title">Binary Search</span><br><span class="note-row-topic">Lecture 4 · Searching algorithms</span></span><span class="note-row-date">Today</span></a></li>
+          <li><a class="note-row" href="#note"><span><span class="note-row-title">Newton's Laws of Motion</span><br><span class="note-row-topic">Chapter 3</span></span><span class="note-row-date">Yesterday</span></a></li>
+          <li><a class="note-row" href="#note"><span><span class="note-row-title">Supply and Demand</span><br><span class="note-row-topic">Week 2 seminar</span></span><span class="note-row-date">Oct 24</span></a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Note workspace -->
+  <section id="note" aria-labelledby="note-h">
+    <h2 id="note-h" class="preview-label">Note page</h2>
+
+    <div class="note-header">
+      <input class="title-input" value="Binary Search" aria-label="Title">
+      <div class="field" data-subject-picker>
+        <label class="field-label" for="subject-b">Subject</label>
+        <select class="select" id="subject-b"></select>
+      </div>
+      <label class="field"><span class="field-label">Topic</span>
+        <input class="input" value="Lecture 4 · Searching algorithms"></label>
+    </div>
+
+    <div class="toolbar">
+      <div class="toolbar-group">
+        <span class="toolbar-label">Include</span>
+        <label class="check"><input type="checkbox"> Simplify</label>
+        <label class="check"><input type="checkbox" checked> Diagrams</label>
+        <label class="check"><input type="checkbox" checked> Flashcards</label>
+        <label class="check"><input type="checkbox"> Applications</label>
+      </div>
+      <div class="toolbar-group">
+        <span class="toolbar-label">Detail</span>
+        <div class="segmented" role="group" aria-label="Detail level" data-segmented>
+          <button type="button" aria-pressed="false">Concise</button>
+          <button type="button" aria-pressed="true">Standard</button>
+          <button type="button" aria-pressed="false">Detailed</button>
+        </div>
+      </div>
+      <div class="toolbar-end">
+        <button class="btn" type="button">Preview &amp; export</button>
+        <button class="btn btn-primary" type="button">Enhance notes</button>
+      </div>
+    </div>
+
+    <div class="segmented pane-tabs" role="group" aria-label="View" data-segmented data-tabs>
+      <button type="button" aria-pressed="false" data-tab="rough">Rough notes</button>
+      <button type="button" aria-pressed="true" data-tab="enhanced">Enhanced</button>
+    </div>
+
+    <div class="workspace" data-tab="enhanced">
+      <div class="pane pane-rough">
+        <div class="pane-head"><span class="pane-title">Rough notes</span><span class="pane-meta">Saved</span></div>
+        <textarea class="rough-editor" aria-label="Rough notes">binary search
+- only works on sorted array
+- compare target with middle element
+- smaller -> go left half, bigger -> right half
+- each step halves the search space
+- time O(log n)
+? why not on linked list
+def: search space = part of array still left to check</textarea>
+      </div>
+
+      <div class="pane pane-enhanced">
+        <div class="pane-head">
+          <span class="pane-title">Enhanced notes</span>
+          <span class="pane-meta">Standard · 6 sections</span>
+        </div>
+        <article class="doc">
+          <h1>Binary Search</h1>
+          <div class="doc-meta">Lecture 4 · Searching algorithms</div>
+
+          <section class="section">
+            <div class="section-tools">
+              <button class="btn btn-ghost btn-sm" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v5h-5"/></svg>Regenerate</button>
+            </div>
+            <h2>What is binary search?</h2>
+            <p>Binary search is a method for finding a value in a <strong>sorted</strong> array. Instead of checking every element one by one, it looks at the middle element and uses the sorted order to discard half of the remaining elements at each step.</p>
+            <div class="callout callout-definition">
+              <span class="callout-label">Definition</span>
+              <p><strong>Search space</strong>: the part of the array that may still contain the target and has not been ruled out yet.</p>
+            </div>
+          </section>
+
+          <section class="section">
+            <div class="section-tools">
+              <button class="btn btn-ghost btn-sm" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h4L19 9l-4-4L4 16v4z"/></svg>Edit diagram</button>
+              <button class="btn btn-ghost btn-sm" type="button"><svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 4v5h-5"/></svg>Regenerate</button>
+            </div>
+            <h2>How it works</h2>
+            <ol>
+              <li>Set <code>low</code> to the first index and <code>high</code> to the last.</li>
+              <li>Compare the target with the middle element.</li>
+              <li>If the target is smaller, continue in the left half; if larger, in the right half.</li>
+              <li>Stop when the target is found or the search space is empty.</li>
+            </ol>
+            <figure class="diagram">
+              <pre class="mermaid">flowchart TD
+  A(["low = 0, high = n − 1"]) --> B{"low ≤ high?"}
+  B -- No --> X(["Not found"])
+  B -- Yes --> C["mid = ⌊(low + high) / 2⌋"]
+  C --> D{"compare arr[mid] with target"}
+  D -- equal --> F(["Found at mid"])
+  D -- "arr[mid] < target" --> L["low = mid + 1"]
+  D -- "arr[mid] > target" --> R["high = mid − 1"]
+  L --> B
+  R --> B</pre>
+              <figcaption>Figure 1. Steps of iterative binary search</figcaption>
+            </figure>
+          </section>
+
+          <section class="section">
+            <h2>Example</h2>
+            <div class="callout callout-example">
+              <span class="callout-label">Example</span>
+              <p>Searching for 23 in <code>[4, 9, 15, 23, 42, 57]</code>: the middle is 15, 23 is larger, so the left half is discarded. The next middle is 42, 23 is smaller, then 23 is found.</p>
+            </div>
+<pre><code>def binary_search(arr, target):
+    low, high = 0, len(arr) - 1
+    while low &lt;= high:
+        mid = (low + high) // 2
+        if arr[mid] == target:
+            return mid
+        if arr[mid] &lt; target:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1</code></pre>
+          </section>
+
+          <section class="section">
+            <h2>Time complexity</h2>
+            <div class="callout callout-formula">
+              <span class="callout-label">Formula</span>
+              <p>$$T(n) = T\!\left(\tfrac{n}{2}\right) + O(1) \;\Rightarrow\; T(n) = O(\log n)$$</p>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Method</th><th>Needs sorted data</th><th>Worst case</th></tr></thead>
+                <tbody>
+                  <tr><td>Linear search</td><td>No</td><td>\(O(n)\)</td></tr>
+                  <tr><td>Binary search</td><td>Yes</td><td>\(O(\log n)\)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>Why not on a linked list?</h2>
+            <p>A linked list cannot jump straight to its middle element. Reaching the middle means walking through about half the nodes, which takes \(O(n)\) time and removes the advantage of halving.</p>
+            <div class="callout callout-verify">
+              <span class="callout-label">Please verify</span>
+              <p>Your notes don't say whether the lecture used the iterative or the recursive version. The example above is iterative, so check which one your course expects.</p>
+            </div>
+          </section>
+
+          <section class="section">
+            <h2>Key takeaways</h2>
+            <div class="callout callout-takeaway">
+              <span class="callout-label">Key takeaways</span>
+              <ul>
+                <li>Works only on sorted data.</li>
+                <li>Each comparison halves the search space.</li>
+                <li>Runs in \(O(\log n)\) time, compared with \(O(n)\) for linear search.</li>
+              </ul>
+            </div>
+            <h3>Flashcards</h3>
+            <div class="flashcards">
+              <button class="flashcard" type="button" aria-expanded="false"><span class="flashcard-q">What must be true about the data before using binary search?</span><span class="flashcard-a">It must be sorted.</span><span class="flashcard-hint">Click to show answer</span></button>
+              <button class="flashcard" type="button" aria-expanded="false"><span class="flashcard-q">What is the worst-case time of binary search?</span><span class="flashcard-a">\(O(\log n)\)</span><span class="flashcard-hint">Click to show answer</span></button>
+              <button class="flashcard" type="button" aria-expanded="false"><span class="flashcard-q">Why is binary search slow on a linked list?</span><span class="flashcard-a">Reaching the middle node takes \(O(n)\) steps.</span><span class="flashcard-hint">Click to show answer</span></button>
+            </div>
+          </section>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- States -->
+  <section aria-labelledby="states-h">
+    <h2 id="states-h" class="preview-label">States</h2>
+    <div class="grid-2">
+      <div class="pane">
+        <div class="pane-head"><span class="pane-title">Enhanced notes</span><span class="pane-meta">Working</span></div>
+        <div class="progress" role="progressbar" aria-label="Working"></div>
+        <div style="padding:var(--s5) var(--s4)" class="status-line">Organizing sections…</div>
+      </div>
+      <div class="pane">
+        <div class="empty-state">
+          <h3>No notes yet</h3>
+          <p>Create a note, type what you hear in class, then enhance it into study notes.</p>
+          <button class="btn btn-primary" type="button">New note</button>
+        </div>
+      </div>
+      <div class="notice notice-error" role="alert">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16.5v.01"/></svg>
+        <div class="notice-body">
+          <div class="notice-title">Service is busy</div>
+          <div>Too many requests in a short time. Please try again in a minute.</div>
+        </div>
+        <button class="btn btn-sm" type="button">Try again</button>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.min.js"></script>
+<script>
+  const root = document.documentElement;
+  const toggle = document.getElementById('theme-toggle');
+
+  function isDark() {
+    const t = root.dataset.theme;
+    return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+
+  // Mermaid reads colors from the CSS tokens so diagrams match the theme
+  function css(name) { return getComputedStyle(root).getPropertyValue(name).trim(); }
+  const diagrams = [...document.querySelectorAll('.mermaid')];
+  diagrams.forEach(el => { el.dataset.source = el.textContent; });
+
+  async function renderDiagrams() {
+    if (!window.mermaid) return;
+    mermaid.initialize({
+      startOnLoad: false,
+      securityLevel: 'strict',
+      theme: 'base',
+      fontFamily: css('--font-ui'),
+      themeVariables: {
+        fontFamily: css('--font-ui'),
+        fontSize: '14px',
+        primaryColor: css('--surface-2'),
+        primaryBorderColor: css('--rule-strong'),
+        primaryTextColor: css('--ink'),
+        lineColor: css('--muted'),
+        edgeLabelBackground: css('--surface'),
+        tertiaryColor: css('--surface'),
+      },
+    });
+    diagrams.forEach(el => { el.removeAttribute('data-processed'); el.textContent = el.dataset.source; });
+    await mermaid.run({ nodes: diagrams });
+  }
+
+  function renderMath() {
+    if (window.renderMathInElement) {
+      renderMathInElement(document.body, {
+        delimiters: [{ left: '$$', right: '$$', display: true }, { left: '\\(', right: '\\)', display: false }],
+      });
+    }
+  }
+
+  toggle.addEventListener('click', () => {
+    root.dataset.theme = isDark() ? 'light' : 'dark';
+    toggle.setAttribute('aria-label', isDark() ? 'Switch to light mode' : 'Switch to dark mode');
+    try { localStorage.setItem('theme', root.dataset.theme); } catch (e) {}
+    renderDiagrams();
+  });
+
+  try {
+    const saved = localStorage.getItem('theme');
+    if (saved) root.dataset.theme = saved;
+  } catch (e) {}
+
+  // Segmented controls (detail level, mobile tabs)
+  document.querySelectorAll('[data-segmented]').forEach(group => {
+    group.addEventListener('click', e => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      group.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', String(b === btn)));
+      if (group.hasAttribute('data-tabs')) document.querySelector('.workspace').dataset.tab = btn.dataset.tab;
+    });
+  });
+
+  // Subjects: the list starts empty and only holds what the user adds.
+  // In the real app this list comes from the database.
+  const subjects = [];
+  const ADD = '__add__';
+
+  function renderSubjects() {
+    document.querySelectorAll('[data-subject-picker] select').forEach(select => {
+      const current = select.value;
+      select.innerHTML = '';
+      select.append(new Option('No subject', ''));
+      subjects.forEach(name => select.append(new Option(name, name)));
+      select.append(new Option('+ Add subject…', ADD));
+      select.value = subjects.includes(current) ? current : '';
+      select.dataset.previous = select.value;
+    });
+    const list = document.getElementById('subject-list');
+    list.innerHTML = '';
+    const all = document.createElement('li');
+    all.innerHTML = '<a href="#" aria-current="true">All notes <span class="count">3</span></a>';
+    list.append(all);
+    subjects.forEach(name => {
+      const li = document.createElement('li');
+      const a = document.createElement('a');
+      a.href = '#';
+      a.textContent = name;
+      const count = document.createElement('span');
+      count.className = 'count';
+      count.textContent = '0';
+      a.append(count);
+      li.append(a);
+      list.append(li);
+    });
+    document.getElementById('subjects-empty').hidden = subjects.length > 0;
+  }
+
+  // Inline "add subject" form, shared by every subject picker
+  function openAddForm(picker) {
+    if (picker.querySelector('.add-subject')) return;
+    const form = document.createElement('form');
+    form.className = 'add-subject';
+    form.innerHTML =
+      '<div class="add-subject-row">' +
+        '<input class="input" name="name" maxlength="60" placeholder="Subject name" aria-label="New subject name" autocomplete="off">' +
+        '<button class="btn btn-primary btn-sm" type="submit">Add</button>' +
+        '<button class="btn btn-ghost btn-sm" type="button" data-cancel>Cancel</button>' +
+      '</div>' +
+      '<div class="field-error" hidden></div>';
+    picker.append(form);
+    const input = form.elements.name;
+    const error = form.querySelector('.field-error');
+    const select = picker.querySelector('select');
+    const opener = picker.querySelector('[data-open-add]');
+    if (opener) opener.hidden = true;
+    input.focus();
+
+    const close = () => { form.remove(); if (opener) opener.hidden = false; };
+    form.querySelector('[data-cancel]').addEventListener('click', close);
+    input.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const name = input.value.trim().replace(/\s+/g, ' ');
+      if (!name) { error.textContent = 'Enter a subject name.'; error.hidden = false; return; }
+      if (subjects.some(s => s.toLowerCase() === name.toLowerCase())) {
+        error.textContent = 'This subject already exists.'; error.hidden = false; return;
+      }
+      subjects.push(name);
+      subjects.sort((a, b) => a.localeCompare(b));
+      renderSubjects();
+      if (select) { select.value = name; select.dataset.previous = name; }
+      close();
+    });
+  }
+
+  document.querySelectorAll('[data-subject-picker]').forEach(picker => {
+    const select = picker.querySelector('select');
+    if (select) {
+      select.addEventListener('change', () => {
+        if (select.value === ADD) {
+          select.value = select.dataset.previous || '';
+          openAddForm(picker);
+        } else {
+          select.dataset.previous = select.value;
+        }
+      });
+    }
+    const opener = picker.querySelector('[data-open-add]');
+    if (opener) opener.addEventListener('click', () => openAddForm(picker));
+  });
+
+  renderSubjects();
+
+  document.querySelectorAll('.flashcard').forEach(card => {
+    card.addEventListener('click', () => {
+      card.setAttribute('aria-expanded', String(card.getAttribute('aria-expanded') !== 'true'));
+    });
+  });
+
+  renderMath();
+  document.fonts.ready.then(renderDiagrams);
+</script>
+</body>
+</html>
