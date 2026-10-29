@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128">
+  <rect x="8" y="8" width="112" height="112" rx="26" fill="#2F6F62"/>
+  <rect x="8" y="8" width="112" height="112" rx="26" fill="none" stroke="#265B50" stroke-width="2"/>
+  <!-- a margin rule, like on notebook paper -->
+  <line x1="34" y1="24" x2="34" y2="104" stroke="#E7F0ED" stroke-opacity=".35" stroke-width="2"/>
+  <text x="68" y="86" text-anchor="middle" font-family="Source Serif 4, Georgia, 'DejaVu Serif', serif" font-size="64" font-weight="600" fill="#FFFFFF">M</text>
+</svg>
