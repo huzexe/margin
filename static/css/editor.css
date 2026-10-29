@@ -1,0 +1,282 @@
+/* Enhanced-notes editor: Editor.js themed to match Margin, plus the custom blocks. */
+
+/* ---------- Editor.js frame ---------- */
+
+#editor-holder { padding: var(--s4) var(--s5) var(--s6) 56px; }
+#editor-holder .codex-editor__redactor { padding-bottom: var(--s6) !important; }
+#editor-holder .ce-block__content,
+#editor-holder .ce-toolbar__content { max-width: none; }
+
+/* Narrow panes: Editor.js moves its buttons into a right-hand margin it reserves, so drop the left gutter */
+#editor-holder:has(.codex-editor--narrow) { padding-left: var(--s5); padding-right: var(--s3); }
+
+#editor-holder .ce-toolbar__plus,
+#editor-holder .ce-toolbar__settings-btn { color: var(--muted); border-radius: var(--radius); }
+#editor-holder .ce-toolbar__plus:hover,
+#editor-holder .ce-toolbar__settings-btn:hover { color: var(--ink); background: var(--surface-2); }
+
+#editor-holder .ce-block--selected .ce-block__content { background: var(--accent-soft); }
+#editor-holder ::selection { background: var(--accent-soft); }
+#editor-holder [data-placeholder]:empty::before,
+#editor-holder [data-placeholder-active]:empty::before { color: var(--muted); }
+
+/* Menus and inline toolbar */
+#editor-holder .ce-popover,
+#editor-holder .ce-inline-toolbar {
+  --color-background: var(--surface);
+  --color-text-primary: var(--ink);
+  --color-text-secondary: var(--muted);
+  --color-border: var(--rule-strong);
+  --color-border-icon: var(--rule-strong);
+  --color-border-icon-disabled: var(--rule);
+  --color-shadow: rgb(0 0 0 / .12);
+  --color-background-item-hover: var(--surface-2);
+  --color-background-item-focus: var(--surface-2);
+  --color-shadow-item-focus: var(--rule-strong);
+  --color-background-icon-active: var(--accent-soft);
+  --color-text-icon-active: var(--accent);
+  --color-background-item-confirm: var(--danger);
+  --color-background-item-confirm-hover: var(--danger);
+  font-family: var(--font-ui);
+  color: var(--ink);
+}
+#editor-holder .ce-popover__container { background: var(--surface); }
+#editor-holder .cdx-search-field { background: var(--surface-2); border-color: var(--rule); }
+#editor-holder .cdx-search-field__input { color: var(--ink); }
+#editor-holder .ce-inline-tool,
+#editor-holder .ce-inline-toolbar__dropdown { color: var(--ink); }
+
+/* ---------- Built-in blocks inside .doc ---------- */
+
+#editor-holder .ce-paragraph { padding: 0; margin: 0 0 var(--s3); line-height: 1.65; }
+#editor-holder h2.ce-header { margin: var(--s5) 0 var(--s3); padding: 0; font-size: 21px; }
+#editor-holder h3.ce-header { margin: var(--s4) 0 var(--s2); padding: 0; font-size: 18px; }
+#editor-holder .ce-block:first-child h2.ce-header { margin-top: 0; }
+
+#editor-holder .cdx-list { margin: 0 0 var(--s3); padding-left: 1.4em; }
+#editor-holder .cdx-list__item { padding: 2px 0; line-height: 1.6; }
+
+#editor-holder .tc-wrap {
+  --color-background: var(--surface-2);
+  --color-text-secondary: var(--muted);
+  --color-border: var(--rule);
+  margin-bottom: var(--s3);
+  font-size: 15px;
+}
+#editor-holder .tc-table--heading .tc-row:first-child {
+  font-family: var(--font-ui);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+#editor-holder .tc-cell { padding: var(--s2) var(--s3); }
+
+#editor-holder .ce-code__textarea {
+  min-height: 0;
+  margin-bottom: var(--s3);
+  padding: var(--s3) var(--s4);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  background: var(--code-bg);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.55;
+  box-shadow: none;
+}
+
+#editor-holder .inline-code {
+  font-family: var(--font-mono);
+  font-size: .85em;
+  padding: 1px 4px;
+  border-radius: 3px;
+  background: var(--code-bg);
+  color: var(--ink);
+  letter-spacing: 0;
+}
+
+/* ---------- Custom blocks ---------- */
+
+#editor-holder .callout { margin: 0 0 var(--s3); }
+.callout-body, .formula-text { outline: none; }
+.callout-body ul, .callout-body ol { margin: 0; padding-left: 1.3em; }
+.callout-body li + li { margin-top: 2px; }
+.callout-body:empty::before,
+.formula-text:empty::before,
+.flashcard-q:empty::before,
+.flashcard-a:empty::before {
+  content: attr(data-placeholder);
+  color: var(--muted);
+}
+
+.formula-display {
+  padding: var(--s2) 0;
+  overflow-x: auto;
+  overflow-y: hidden;
+  cursor: pointer;
+  border-radius: var(--radius);
+}
+.formula-display:hover { background: rgb(0 0 0 / .03); }
+.formula-display.is-empty { color: var(--muted); font-family: var(--font-ui); font-size: var(--text-sm); }
+.formula-display .katex-display { margin: 0; }
+.formula-input {
+  width: 100%;
+  margin: var(--s1) 0 var(--s2);
+  padding: var(--s2);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 14px;
+  resize: vertical;
+}
+.formula-text { font-size: .94em; color: var(--ink-2); }
+
+.flashcards-block { margin: 0 0 var(--s4); }
+.flashcards-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--s2);
+  font-family: var(--font-ui);
+}
+.flashcards-count { font-size: var(--text-sm); color: var(--muted); }
+.flashcards-block .flashcards { margin: 0; }
+.flashcard-edit {
+  display: grid;
+  gap: var(--s1);
+  align-content: start;
+  padding: var(--s3);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  font-size: 16px;
+  line-height: 1.5;
+}
+.flashcard-edit .flashcard-q { font-weight: 600; outline: none; }
+.flashcard-edit .flashcard-a { color: var(--ink-2); outline: none; }
+.flashcard-remove { justify-self: start; margin-top: var(--s1); color: var(--muted); font-family: var(--font-ui); }
+.flashcard-add { align-self: center; justify-self: start; font-family: var(--font-ui); color: var(--accent); }
+
+/* Diagram block */
+#editor-holder .diagram-block { margin: 0 0 var(--s4); padding: var(--s4); }
+.diagram-canvas { display: flex; justify-content: center; overflow-x: auto; min-height: 40px; }
+.diagram-canvas svg { max-width: 100%; height: auto; max-height: 560px; }
+.diagram-block figcaption { outline: none; text-align: center; }
+.diagram-block figcaption:empty::before { content: attr(data-placeholder); color: var(--muted); }
+.diagram-tools {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: var(--s2);
+  font-family: var(--font-ui);
+  opacity: 0;
+  transition: opacity .12s;
+}
+.diagram-block:hover .diagram-tools,
+.diagram-block:focus-within .diagram-tools { opacity: 1; }
+@media (hover: none) { .diagram-tools { opacity: 1; } }
+
+.diagram-editor {
+  display: grid;
+  gap: var(--s2);
+  margin-top: var(--s2);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--rule);
+  text-align: left;
+  font-family: var(--font-ui);
+}
+.diagram-editor .field-label { display: grid; gap: var(--s1); }
+.diagram-code {
+  width: 100%;
+  padding: var(--s2) var(--s3);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius);
+  background: var(--code-bg);
+  color: var(--ink);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.5;
+  resize: vertical;
+  tab-size: 2;
+}
+.diagram-code:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.diagram-editor-actions { display: flex; gap: var(--s2); }
+
+.diagram-canvas.is-broken { justify-content: flex-start; }
+.diagram-fallback { display: grid; gap: var(--s2); text-align: left; font-family: var(--font-ui); font-size: var(--text-md); }
+.diagram-fallback ul { margin: 0; padding-left: 1.3em; color: var(--ink-2); }
+.diagram-note { color: var(--muted); font-family: var(--font-ui); font-size: var(--text-sm); }
+
+/* Full-screen diagram view */
+.zoom-dialog {
+  width: min(96vw, 1600px);
+  height: 92vh;
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: var(--font-ui);
+}
+.zoom-dialog[open] { display: flex; flex-direction: column; }
+.zoom-dialog::backdrop { background: rgb(0 0 0 / .45); }
+.zoom-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s2) var(--s4);
+  padding: var(--s3) var(--s4);
+  border-bottom: 1px solid var(--rule);
+}
+.zoom-caption { font-weight: 600; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.zoom-controls { display: flex; align-items: center; gap: var(--s2); }
+.zoom-level { min-width: 3.2em; text-align: center; font-size: var(--text-sm); color: var(--muted); font-variant-numeric: tabular-nums; }
+.zoom-stage { flex: 1; overflow: auto; display: flex; padding: var(--s5); background: var(--paper); outline: none; }
+/* margin:auto centres a small diagram but never pushes a large one out of scroll reach */
+.zoom-stage svg { flex: none; margin: auto; max-width: none !important; max-height: none !important; }
+
+/* Section regenerate */
+.pane-enhanced { position: relative; }
+.section-regen {
+  position: absolute;
+  z-index: 5;
+  gap: var(--s1);
+  background: var(--surface);
+  color: var(--ink-2);
+  box-shadow: 0 1px 2px rgb(0 0 0 / .06);
+}
+.section-regen:hover { color: var(--ink); }
+.section-form {
+  position: absolute;
+  z-index: 6;
+  right: 12px;
+  display: grid;
+  gap: var(--s2);
+  width: min(380px, calc(100% - 24px));
+  padding: var(--s3);
+  border: 1px solid var(--rule-strong);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  box-shadow: 0 6px 24px rgb(0 0 0 / .12);
+  font-family: var(--font-ui);
+}
+.chips { display: flex; flex-wrap: wrap; gap: var(--s1); }
+.chip {
+  height: 26px;
+  padding: 0 var(--s2);
+  border: 1px solid var(--rule-strong);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink-2);
+  font-size: var(--text-sm);
+  cursor: pointer;
+}
+.chip:hover { border-color: var(--accent); color: var(--accent); }
+#editor-holder .ce-block.is-regenerating { opacity: .4; pointer-events: none; transition: opacity .15s; }
+
+/* KaTeX color follows the theme */
+.katex { color: var(--ink); }

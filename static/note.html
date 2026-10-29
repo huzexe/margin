@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Note · Margin</title>
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<script src="/static/js/theme.js"></script>
+<link rel="stylesheet" href="/static/css/fonts.css">
+<link rel="stylesheet" href="/static/vendor/katex/katex.min.css">
+<link rel="stylesheet" href="/static/css/tokens.css">
+<link rel="stylesheet" href="/static/css/base.css">
+<link rel="stylesheet" href="/static/css/components.css">
+<link rel="stylesheet" href="/static/css/pages.css">
+<link rel="stylesheet" href="/static/css/editor.css">
+<script src="/static/vendor/katex/katex.min.js" defer></script>
+<script src="/static/vendor/mermaid/mermaid.min.js" defer></script>
+<script src="/static/vendor/editorjs/editorjs.umd.js" defer></script>
+<script src="/static/vendor/editorjs/header.umd.js" defer></script>
+<script src="/static/vendor/editorjs/list.umd.js" defer></script>
+<script src="/static/vendor/editorjs/table.umd.js" defer></script>
+<script src="/static/vendor/editorjs/code.umd.js" defer></script>
+<script src="/static/vendor/editorjs/inline-code.umd.js" defer></script>
+<script type="module" src="/static/js/note.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/"><span class="brand-mark" aria-hidden="true">M</span>Margin</a>
+  <nav class="topnav" aria-label="Main">
+    <a href="/" id="library-link">Library</a>
+    <a href="/settings">Settings</a>
+  </nav>
+  <div class="topbar-end">
+    <button class="btn btn-ghost btn-icon" id="theme-toggle" type="button"></button>
+    <a class="btn btn-primary" href="/notes/new">
+      <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New note
+    </a>
+  </div>
+</header>
+
+<main class="page note-page">
+  <div id="load-error"></div>
+
+  <div id="note" hidden>
+    <div class="note-bar">
+      <a class="back-link" href="/" id="back-link">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Library
+      </a>
+      <div class="note-bar-end">
+        <span class="save-status" id="save-status" aria-live="polite"></span>
+        <button class="btn btn-ghost btn-sm btn-danger" type="button" id="delete-note" hidden>
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/></svg>Delete
+        </button>
+      </div>
+    </div>
+
+    <div class="confirm-bar" id="delete-confirm" hidden role="alertdialog" aria-labelledby="delete-confirm-text">
+      <p id="delete-confirm-text">Delete this note? This can't be undone.</p>
+      <div class="confirm-actions">
+        <button class="btn btn-danger btn-sm" type="button" id="delete-yes">Delete note</button>
+        <button class="btn btn-ghost btn-sm" type="button" id="delete-no">Cancel</button>
+      </div>
+    </div>
+
+    <div class="note-header">
+      <input class="title-input" id="title" placeholder="Untitled note" maxlength="200" aria-label="Title" autocomplete="off">
+      <div class="field" id="subject-field">
+        <label class="field-label" for="subject">Subject</label>
+        <select class="select" id="subject"></select>
+      </div>
+      <div class="field">
+        <label class="field-label" for="topic">Topic</label>
+        <input class="input" id="topic" maxlength="200" placeholder="e.g. Lecture 4 · Searching algorithms" autocomplete="off">
+      </div>
+      <div class="field tags-field">
+        <label class="field-label" for="tag-input">Tags</label>
+        <div class="tag-box" id="tag-box">
+          <input id="tag-input" class="tag-input" list="tag-suggestions" maxlength="31" autocomplete="off" placeholder="Add a tag…">
+        </div>
+        <datalist id="tag-suggestions"></datalist>
+        <p class="field-error" id="tag-error" hidden></p>
+      </div>
+    </div>
+
+    <div class="toolbar" id="toolbar">
+      <div class="toolbar-group" role="group" aria-labelledby="include-label">
+        <span class="toolbar-label" id="include-label">Include</span>
+        <label class="check" title="Plain words and simple explanations"><input type="checkbox" id="opt-simplify"> Simplify</label>
+        <label class="check" title="Flowcharts, concept maps and other diagrams where they help"><input type="checkbox" id="opt-diagrams"> Diagrams</label>
+        <label class="check" title="Question and answer cards for revision"><input type="checkbox" id="opt-flashcards"> Flashcards</label>
+        <label class="check" title="Real-world uses of the topic"><input type="checkbox" id="opt-applications"> Applications</label>
+      </div>
+      <div class="toolbar-group">
+        <span class="toolbar-label" id="detail-label">Detail</span>
+        <div class="segmented" role="group" aria-labelledby="detail-label" id="opt-detail">
+          <button type="button" data-value="concise" aria-pressed="false">Concise</button>
+          <button type="button" data-value="standard" aria-pressed="true">Standard</button>
+          <button type="button" data-value="detailed" aria-pressed="false">Detailed</button>
+        </div>
+      </div>
+      <div class="toolbar-end">
+        <button class="btn" type="button" id="export" disabled title="Write something first">
+          <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="m7 10 5 5 5-5"/><path d="M5 20h14"/></svg>Preview &amp; export
+        </button>
+        <button class="btn btn-primary" type="button" id="enhance" title="Enhance notes (Ctrl+Enter)">Enhance notes</button>
+      </div>
+    </div>
+
+    <div class="segmented pane-tabs" role="group" aria-label="View" id="pane-tabs">
+      <button type="button" data-tab="rough" aria-pressed="true">Rough notes</button>
+      <button type="button" data-tab="enhanced" aria-pressed="false">Enhanced</button>
+    </div>
+
+    <div class="workspace" id="workspace" data-tab="rough">
+      <section class="pane pane-rough" aria-labelledby="rough-label">
+        <div class="pane-head">
+          <label class="pane-title" id="rough-label" for="rough">Rough notes</label>
+          <span class="pane-meta" id="rough-count"></span>
+        </div>
+        <textarea class="rough-editor" id="rough" maxlength="20000" spellcheck="true"
+          placeholder="Type what you hear: keywords, short lines, definitions, questions…"></textarea>
+      </section>
+
+      <section class="pane pane-enhanced" id="pane-enhanced" aria-labelledby="enhanced-label">
+        <div class="pane-head">
+          <span class="pane-title" id="enhanced-label">Enhanced notes</span>
+          <span class="pane-meta" id="enhanced-meta"></span>
+        </div>
+        <div class="progress" id="enh-progress" role="progressbar" aria-label="Working" hidden></div>
+
+        <div class="enh-panel" id="enh-empty" hidden>
+          <div class="empty-state">
+            <h3>No enhanced notes yet</h3>
+            <p>Write your rough notes, choose what to include, then press <strong>Enhance notes</strong>.</p>
+          </div>
+        </div>
+
+        <div class="enh-panel enh-working" id="enh-working" hidden>
+          <p class="status-line" id="enh-status">Enhancing your notes…</p>
+          <p class="field-hint">This usually takes 10–40 seconds.</p>
+          <button class="btn btn-sm" type="button" id="enh-cancel">Cancel</button>
+        </div>
+
+        <div class="enh-panel" id="enh-message" hidden></div>
+
+        <div class="doc" id="editor-holder" hidden></div>
+      </section>
+    </div>
+  </div>
+</main>
+
+</body>
+</html>
