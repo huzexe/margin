@@ -58,7 +58,7 @@ def url() -> str:
 
 def server_up() -> bool:
     try:
-        with urllib.request.urlopen(url() + "/static/favicon.svg", timeout=2):
+        with urllib.request.urlopen(url() + "/static/favicon.png", timeout=2):
             return True
     except (urllib.error.URLError, OSError):
         return False
@@ -345,10 +345,12 @@ def install() -> int:
         say("Shortcuts aren't created on macOS. Open Margin with:  python3 start.py --app")
     else:
         apps = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local" / "share")) / "applications"
-        icons = apps.parent / "icons" / "hicolor" / "scalable" / "apps"
+        icons = apps.parent / "icons" / "hicolor" / "256x256" / "apps"
         apps.mkdir(parents=True, exist_ok=True)
         icons.mkdir(parents=True, exist_ok=True)
-        shutil.copy(ROOT / "static" / "app-icon.svg", icons / "margin.svg")
+        shutil.copy(ROOT / "static" / "app-icon.png", icons / "margin.png")
+        # Older installs used an SVG icon, which the desktop would keep showing over the PNG
+        (icons.parents[1] / "scalable" / "apps" / "margin.svg").unlink(missing_ok=True)
         (apps / "margin.desktop").write_text(linux_desktop_entry(system_python()), encoding="utf-8")
         for cmd in (["update-desktop-database", apps], ["gtk-update-icon-cache", "-q", "-f", "-t", icons.parents[2]]):
             if shutil.which(cmd[0]):
@@ -365,7 +367,9 @@ def uninstall() -> int:
                         "{ Remove-Item -ErrorAction SilentlyContinue (Join-Path $d 'Margin.lnk'), (Join-Path $d 'Quit Margin.lnk') }"])
     elif not MAC:
         share = Path(os.environ.get("XDG_DATA_HOME", Path.home() / ".local" / "share"))
-        for f in (share / "applications" / "margin.desktop", share / "icons" / "hicolor" / "scalable" / "apps" / "margin.svg"):
+        hicolor = share / "icons" / "hicolor"
+        for f in (share / "applications" / "margin.desktop", hicolor / "256x256" / "apps" / "margin.png",
+                  hicolor / "scalable" / "apps" / "margin.svg"):
             f.unlink(missing_ok=True)
     shutil.rmtree(profile_dir(), ignore_errors=True)  # the app window's browser profile; no notes are stored there
     say("Margin's shortcuts were removed. Your notes are still in the data folder.")

@@ -164,14 +164,9 @@ a.btn-primary:hover { color: var(--on-accent); }
   text-decoration: none;
 }
 .brand-mark {
-  width: 22px; height: 22px;
-  border-radius: var(--radius);
-  background: var(--accent);
-  color: var(--on-accent);
-  display: grid; place-items: center;
-  font-family: var(--font-read);
-  font-size: 14px;
-  font-weight: 600;
+  width: 24px; height: 24px;
+  border-radius: 6px;
+  display: block;
 }
 .topnav { display: flex; gap: var(--s1); }
 .topnav a {

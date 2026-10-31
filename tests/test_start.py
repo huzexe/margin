@@ -76,7 +76,7 @@ def test_linux_desktop_entry(tmp_path):
 
 def _up(port: int) -> bool:
     try:
-        urllib.request.urlopen(f"http://127.0.0.1:{port}/static/favicon.svg", timeout=1)
+        urllib.request.urlopen(f"http://127.0.0.1:{port}/static/favicon.png", timeout=1)
         return True
     except OSError:
         return False
