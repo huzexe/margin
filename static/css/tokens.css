@@ -1,40 +1,61 @@
 /* Design tokens: every color, font and spacing value used by the app.
-   Change a value here and it updates everywhere. */
+   Change a value here and it updates everywhere.
+   The palette comes from the logo: deep navy ink, a warm notebook-margin red
+   for rough notes, and a cool blue for finished notes. */
 
 :root {
   color-scheme: light;
 
   /* Surfaces */
-  --paper: #FAF8F3;
+  --paper: #F3F5F9;
   --surface: #FFFFFF;
-  --surface-2: #F3F0E8;
-  --rule: #E5E0D5;
-  --rule-strong: #D3CDBF;
+  --surface-2: #EBEEF4;
+  --rule: #E1E5EE;
+  --rule-strong: #CAD1DE;
 
   /* Text */
-  --ink: #1F2328;
-  --ink-2: #3D4148;
-  --muted: #6B6F76;
+  --ink: #0B1530;
+  --ink-2: #2E3A56;
+  --muted: #616B82;
 
-  /* Accent (used sparingly: primary actions, links, focus) */
-  --accent: #2F6F62;
-  --accent-hover: #265B50;
-  --accent-soft: #E7F0ED;
+  /* Accent (links, focus, selection, finished notes) */
+  --accent: #0B6FD1;
+  --accent-hover: #095CAF;
+  --accent-soft: #E3EEFB;
   --on-accent: #FFFFFF;
 
-  --danger: #A4372E;
-  --danger-soft: #F7E8E6;
+  /* Warm margin red (rough notes, the notebook margin line) */
+  --warm: #E5482C;
+  --warm-soft: #FDECE7;
+
+  /* Main action buttons */
+  --primary: #0B1530;
+  --primary-hover: #1C2A4D;
+  --on-primary: #FFFFFF;
+
+  /* Notebook paper */
+  --notebook-rule: #DCE5F3;
+  --margin-line: rgb(229 72 44 / .6);
+
+  --danger: #C2361F;
+  --danger-soft: #FCEAE6;
+
+  --shadow-sm: 0 1px 2px rgb(11 21 48 / .06);
+  --shadow-md: 0 1px 2px rgb(11 21 48 / .05), 0 8px 24px -8px rgb(11 21 48 / .14);
+  --glow-warm: rgb(255 107 69 / .10);
+  --glow-cool: rgb(34 184 232 / .10);
 
   /* Callouts: background / left border / label */
-  --definition-bg: #EEF3EC;  --definition-line: #8BA787;  --definition-label: #4C6A49;
-  --formula-bg: #EDF0F4;     --formula-line: #8B98AA;     --formula-label: #4B5A6E;
-  --example-bg: #F6F0E3;     --example-line: #C4A877;     --example-label: #7A6232;
-  --takeaway-bg: #E7F0ED;    --takeaway-line: #2F6F62;    --takeaway-label: #2F6F62;
-  --verify-bg: #FBF1DE;      --verify-line: #C98A1B;      --verify-label: #8A5D0E;
+  --definition-bg: #EAF2FD;  --definition-line: #5B9BE6;  --definition-label: #1F5FA8;
+  --formula-bg: #EEF0F7;     --formula-line: #8C93B8;     --formula-label: #444C78;
+  --example-bg: #FBF3E4;     --example-line: #E0A642;     --example-label: #8A5A0B;
+  --takeaway-bg: #E4F6F8;    --takeaway-line: #1FA9BF;    --takeaway-label: #0B6A78;
+  --verify-bg: #FDEDE7;      --verify-line: #E5532E;      --verify-label: #A3341A;
 
-  --code-bg: #F3F0E8;
+  --code-bg: #EEF1F6;
 
   /* Type */
+  --font-display: "Bricolage Grotesque", "IBM Plex Sans", system-ui, sans-serif;
   --font-ui: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-read: "Source Serif 4", Georgia, "Times New Roman", serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -44,63 +65,87 @@
   --text-md: 0.875rem;  /* 14 */
   --text-lg: 1rem;      /* 16 */
   --text-xl: 1.25rem;   /* 20 */
-  --text-2xl: 1.625rem; /* 26 */
+  --text-2xl: 1.75rem;  /* 28 */
+  --text-3xl: 2.25rem;  /* 36 */
 
   /* Spacing (4px scale) */
   --s1: 4px;  --s2: 8px;  --s3: 12px; --s4: 16px;
   --s5: 24px; --s6: 32px; --s7: 48px; --s8: 64px;
 
-  --radius: 4px;
-  --radius-lg: 6px;
+  --radius: 8px;
+  --radius-lg: 14px;
+  --topbar-h: 60px;
   --focus: 0 0 0 2px var(--paper), 0 0 0 4px var(--accent);
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     color-scheme: dark;
-    --paper: #1A1917;
-    --surface: #222120;
-    --surface-2: #2A2926;
-    --rule: #34322E;
-    --rule-strong: #47443E;
-    --ink: #ECE8E0;
-    --ink-2: #CFCAC0;
-    --muted: #9B978E;
-    --accent: #6FB3A3;
-    --accent-hover: #86C2B4;
-    --accent-soft: #233430;
-    --on-accent: #10201C;
-    --danger: #E08A80;
-    --danger-soft: #3A2422;
-    --definition-bg: #232B22;  --definition-line: #6E8C6A;  --definition-label: #A9C4A5;
-    --formula-bg: #22262D;     --formula-line: #6F7D90;     --formula-label: #A8B5C7;
-    --example-bg: #2D281E;     --example-line: #A68C5C;     --example-label: #D6BE8E;
-    --takeaway-bg: #213330;    --takeaway-line: #6FB3A3;    --takeaway-label: #8CCABB;
-    --verify-bg: #33291A;      --verify-line: #C98A1B;      --verify-label: #E4B566;
-    --code-bg: #2A2926;
+    --paper: #081024;
+    --surface: #0E1932;
+    --surface-2: #15223F;
+    --rule: #1D2A48;
+    --rule-strong: #2B3A5E;
+    --ink: #E9EEF8;
+    --ink-2: #BCC6DB;
+    --muted: #8692AD;
+    --accent: #4CC4F2;
+    --accent-hover: #78D4F6;
+    --accent-soft: #10304A;
+    --on-accent: #06101F;
+    --warm: #FF6B45;
+    --warm-soft: #3A1B1A;
+    --primary: #E9EEF8;
+    --primary-hover: #FFFFFF;
+    --on-primary: #081024;
+    --notebook-rule: #17243F;
+    --margin-line: rgb(255 107 69 / .7);
+    --danger: #FF7F66;
+    --danger-soft: #3A1B1A;
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / .3);
+    --shadow-md: 0 1px 2px rgb(0 0 0 / .3), 0 12px 32px -12px rgb(0 0 0 / .6);
+    --glow-warm: rgb(255 107 69 / .13);
+    --glow-cool: rgb(34 184 232 / .13);
+    --definition-bg: #12243F;  --definition-line: #4A8BD8;  --definition-label: #9CC6F5;
+    --formula-bg: #1A1F38;     --formula-line: #7178A8;     --formula-label: #B9BEE3;
+    --example-bg: #2B2316;     --example-line: #C99234;     --example-label: #EBC57E;
+    --takeaway-bg: #0F2C35;    --takeaway-line: #2BB8CF;    --takeaway-label: #8FE0EE;
+    --verify-bg: #33191A;      --verify-line: #FF6B45;      --verify-label: #FFAA8C;
+    --code-bg: #14203B;
   }
 }
 
 :root[data-theme="dark"] {
   color-scheme: dark;
-  --paper: #1A1917;
-  --surface: #222120;
-  --surface-2: #2A2926;
-  --rule: #34322E;
-  --rule-strong: #47443E;
-  --ink: #ECE8E0;
-  --ink-2: #CFCAC0;
-  --muted: #9B978E;
-  --accent: #6FB3A3;
-  --accent-hover: #86C2B4;
-  --accent-soft: #233430;
-  --on-accent: #10201C;
-  --danger: #E08A80;
-  --danger-soft: #3A2422;
-  --definition-bg: #232B22;  --definition-line: #6E8C6A;  --definition-label: #A9C4A5;
-  --formula-bg: #22262D;     --formula-line: #6F7D90;     --formula-label: #A8B5C7;
-  --example-bg: #2D281E;     --example-line: #A68C5C;     --example-label: #D6BE8E;
-  --takeaway-bg: #213330;    --takeaway-line: #6FB3A3;    --takeaway-label: #8CCABB;
-  --verify-bg: #33291A;      --verify-line: #C98A1B;      --verify-label: #E4B566;
-  --code-bg: #2A2926;
+  --paper: #081024;
+  --surface: #0E1932;
+  --surface-2: #15223F;
+  --rule: #1D2A48;
+  --rule-strong: #2B3A5E;
+  --ink: #E9EEF8;
+  --ink-2: #BCC6DB;
+  --muted: #8692AD;
+  --accent: #4CC4F2;
+  --accent-hover: #78D4F6;
+  --accent-soft: #10304A;
+  --on-accent: #06101F;
+  --warm: #FF6B45;
+  --warm-soft: #3A1B1A;
+  --primary: #E9EEF8;
+  --primary-hover: #FFFFFF;
+  --on-primary: #081024;
+  --notebook-rule: #17243F;
+  --margin-line: rgb(255 107 69 / .7);
+  --danger: #FF7F66;
+  --danger-soft: #3A1B1A;
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / .3);
+  --shadow-md: 0 1px 2px rgb(0 0 0 / .3), 0 12px 32px -12px rgb(0 0 0 / .6);
+  --glow-warm: rgb(255 107 69 / .13);
+  --glow-cool: rgb(34 184 232 / .13);
+  --definition-bg: #12243F;  --definition-line: #4A8BD8;  --definition-label: #9CC6F5;
+  --formula-bg: #1A1F38;     --formula-line: #7178A8;     --formula-label: #B9BEE3;
+  --example-bg: #2B2316;     --example-line: #C99234;     --example-label: #EBC57E;
+  --takeaway-bg: #0F2C35;    --takeaway-line: #2BB8CF;    --takeaway-label: #8FE0EE;
+  --verify-bg: #33191A;      --verify-line: #FF6B45;      --verify-label: #FFAA8C;
+  --code-bg: #14203B;
 }

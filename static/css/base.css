@@ -6,7 +6,12 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
-  background: var(--paper);
+  /* Faint warm and cool glows at the top corners, like the two halves of the logo */
+  background:
+    radial-gradient(900px 420px at -10% -8%, var(--glow-warm), transparent 70%),
+    radial-gradient(900px 420px at 110% -8%, var(--glow-cool), transparent 70%),
+    var(--paper);
+  background-attachment: fixed;
   color: var(--ink);
   font-family: var(--font-ui);
   font-size: var(--text-md);
@@ -15,6 +20,9 @@ body {
 }
 
 h1, h2, h3, h4 { margin: 0; font-weight: 600; line-height: 1.25; }
+h1, h2, h3 { font-family: var(--font-display); letter-spacing: -.01em; }
+
+::selection { background: var(--accent-soft); }
 p { margin: 0; }
 
 a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }

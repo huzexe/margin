@@ -3,7 +3,7 @@
 .page {
   max-width: 1240px;
   margin: 0 auto;
-  padding-block: var(--s5) var(--s7);
+  padding-block: var(--s6) var(--s7);
   padding-inline: var(--s5);
 }
 
@@ -22,8 +22,8 @@
 
 /* ---------- Library ---------- */
 
-.library-page { min-height: calc(100vh - 52px - var(--s5) - var(--s7)); }
-.library-heading { font-size: var(--text-xl); margin-bottom: var(--s4); }
+.library-heading { font-size: var(--text-3xl); font-weight: 800; letter-spacing: -.025em; line-height: 1.1; }
+.library-sub { margin: 6px 0 var(--s5); color: var(--muted); font-size: var(--text-md); min-height: 1.5em; }
 
 .subject-item { display: flex; align-items: center; gap: 2px; }
 .subject-item a { flex: 1; min-width: 0; gap: var(--s2); }
@@ -66,9 +66,6 @@
 
 .note-row-main { display: flex; flex-direction: column; flex: 1; min-width: 0; }
 
-@media (max-width: 900px) {
-  .library-page { min-height: 0; } /* stacked on narrow screens: no stretched empty sidebar */
-}
 .note-row-title, .note-row-topic { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .note-row-title.is-untitled { color: var(--muted); font-style: italic; }
 
@@ -116,7 +113,7 @@
 /* Rough notes: fills the screen height and scrolls inside, so it stays beside long enhanced notes */
 .workspace .rough-editor {
   flex: none;
-  height: calc(100vh - 52px - 42px - 2 * var(--s4) - 2px);
+  height: calc(100vh - var(--topbar-h) - 46px - 2 * var(--s4) - 2px);
   min-height: 320px;
   overflow-y: auto;
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
@@ -154,15 +151,16 @@
 }
 .export-settings {
   position: sticky;
-  top: calc(52px + var(--s4) + env(safe-area-inset-top, 0px));
+  top: calc(var(--topbar-h) + var(--s4) + env(safe-area-inset-top, 0px));
   display: grid;
   gap: var(--s4);
   padding: var(--s5);
   border: 1px solid var(--rule);
   border-radius: var(--radius-lg);
   background: var(--surface);
+  box-shadow: var(--shadow-sm);
 }
-.export-heading { font-size: var(--text-xl); }
+.export-heading { font-size: var(--text-2xl); font-weight: 800; }
 .export-note-title { margin-top: calc(-1 * var(--s3)); color: var(--muted); overflow-wrap: anywhere; }
 .export-group { display: grid; gap: var(--s2); margin: 0; padding: 0; border: 0; justify-items: start; }
 .export-group legend { margin-bottom: var(--s2); padding: 0; }
@@ -172,7 +170,7 @@
 .export-frame-wrap iframe {
   flex: 1;
   width: 100%;
-  height: calc(100vh - 52px - 42px - var(--s5) - var(--s7) - 40px);
+  height: calc(100vh - var(--topbar-h) - 46px - var(--s6) - var(--s7) - 40px);
   min-height: 560px;
   border: 0;
   border-radius: 0 0 var(--radius-lg) var(--radius-lg);
@@ -189,7 +187,7 @@
 /* ---------- Settings ---------- */
 
 .settings-page { max-width: 760px; }
-.settings-title { font-size: var(--text-2xl); margin-bottom: var(--s5); }
+.settings-title { font-size: var(--text-3xl); font-weight: 800; letter-spacing: -.025em; margin-bottom: var(--s5); }
 .settings-card {
   display: grid;
   gap: var(--s3);
@@ -198,8 +196,9 @@
   border: 1px solid var(--rule);
   border-radius: var(--radius-lg);
   background: var(--surface);
+  box-shadow: var(--shadow-sm);
 }
-.settings-card h2 { font-size: var(--text-lg); }
+.settings-card h2 { font-size: var(--text-xl); font-weight: 700; }
 .settings-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s3) var(--s4); }
 .restore-choice { gap: var(--s4); justify-items: start; }
 .restore-options { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s4); }
@@ -220,8 +219,9 @@
   border: 1px solid var(--rule);
   border-radius: var(--radius-lg);
   background: var(--surface);
+  box-shadow: var(--shadow-sm);
 }
-.unlock-card .brand { justify-content: center; font-size: var(--text-xl) !important; gap: var(--s2) !important; }
+.unlock-card .brand { justify-content: center; font-size: var(--text-2xl) !important; gap: 10px !important; }
 .unlock-pin { height: 44px; font-size: 20px; letter-spacing: .3em; text-align: center; }
 .unlock-card .btn { height: 40px; justify-content: center; }
 .unlock-card .field-hint { text-align: center; }
@@ -241,11 +241,11 @@
 }
 .toast {
   padding: var(--s3) var(--s4);
-  border-radius: var(--radius-lg);
+  border-radius: 12px;
   background: var(--ink);
   color: var(--paper);
   font-size: var(--text-md);
-  box-shadow: 0 4px 16px rgb(0 0 0 / .15);
+  box-shadow: 0 10px 30px -8px rgb(0 0 0 / .35);
 }
 .toast-error { background: var(--danger); color: #fff; }
 .toast:has(.toast-action) {
@@ -261,7 +261,7 @@
   border: 0;
   border-radius: var(--radius);
   background: transparent;
-  color: var(--accent-soft);
+  color: var(--paper);
   font-weight: 600;
   text-decoration: underline;
   text-underline-offset: 2px;

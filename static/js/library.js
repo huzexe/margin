@@ -11,6 +11,7 @@ const subjectList = document.getElementById('subject-list');
 const searchInput = document.getElementById('search');
 const sortSelect = document.getElementById('sort');
 const heading = document.getElementById('list-heading');
+const listCount = document.getElementById('list-count');
 
 // Filters live in the URL so Back from a note returns to the same view
 const params = new URLSearchParams(location.search);
@@ -166,12 +167,14 @@ async function renderList() {
     notes = await api(`/api/notes?${p}`);
   } catch (err) {
     if (id !== requestId) return;
+    listCount.textContent = '';
     listArea.replaceChildren(errorNotice("Couldn't load notes", err.message, renderList));
     return;
   }
   if (id !== requestId) return; // a newer search finished first
 
   document.getElementById('new-note').href = newNoteHref();
+  listCount.textContent = notes.length ? `${notes.length} ${notes.length === 1 ? 'note' : 'notes'}` : '';
 
   if (!notes.length) {
     const subject = getSubjects().find(s => s.id === state.subjectId);
