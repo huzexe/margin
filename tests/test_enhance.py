@@ -5,6 +5,7 @@ import sqlite3
 import pytest
 from fastapi.testclient import TestClient
 
+from app import config
 from app.services import llm
 from app.services.enhance import Block, EnhancedNotes, Section, inline, to_editor
 
@@ -226,3 +227,43 @@ def test_regenerate_mentions_other_sections(client, monkeypatch):
     assert r.status_code == 200
     assert "- Section: Handshake" in seen["prompt"] and "- Diagram: SYN, SYN-ACK, ACK" in seen["prompt"]
     assert "Diagram: Own diagram" not in seen["prompt"] and "Section: Key takeaways" not in seen["prompt"]
+
+
+def _api_error(code, message):
+    from google.genai import errors
+    return errors.APIError(code, {"error": {"code": code, "message": message, "status": "X"}})
+
+
+def test_rate_limit_tries_the_fallback_model(monkeypatch):
+    from app.services.enhance import DiagramFix
+
+    calls = []
+
+    def fake_call(model, *args):
+        calls.append(model)
+        if model == "main":
+            raise _api_error(429, "Quota exceeded for requests per day")
+        return type("Reply", (), {"parsed": DiagramFix(mermaid="flowchart TD"), "prompt_feedback": None})()
+
+    monkeypatch.setattr(config, "GEMINI_MODEL", "main")
+    monkeypatch.setattr(config, "GEMINI_FALLBACK_MODEL", "backup")
+    monkeypatch.setattr(llm, "_call", fake_call)
+    assert llm.generate_json("s", "p", DiagramFix).mermaid == "flowchart TD"
+    assert calls == ["main", "backup"]  # the backup model has its own quota
+
+
+def test_rejected_key_does_not_try_the_fallback_model(monkeypatch):
+    from app.services.enhance import DiagramFix
+
+    calls = []
+
+    def fake_call(model, *args):
+        calls.append(model)
+        raise _api_error(403, "API key not valid")
+
+    monkeypatch.setattr(config, "GEMINI_MODEL", "main")
+    monkeypatch.setattr(config, "GEMINI_FALLBACK_MODEL", "backup")
+    monkeypatch.setattr(llm, "_call", fake_call)
+    with pytest.raises(llm.LLMError) as err:
+        llm.generate_json("s", "p", DiagramFix)
+    assert err.value.message == llm.MSG_BAD_KEY and calls == ["main"]

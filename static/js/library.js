@@ -114,11 +114,13 @@ async function loadTags() {
 function renderTags() {
   const box = document.getElementById('tag-list');
   document.getElementById('tags-section').hidden = !tags.length;
+  // Tags match regardless of case (a link may say ?tag=exam for the tag "Exam")
+  const isCurrent = t => state.tag?.toLowerCase() === t.name.toLowerCase();
   box.replaceChildren(...tags.map(t => el('button', {
-    type: 'button', class: 'tag-filter', 'aria-pressed': String(state.tag === t.name),
+    type: 'button', class: 'tag-filter', 'aria-pressed': String(isCurrent(t)),
     title: `${t.note_count} ${t.note_count === 1 ? 'note' : 'notes'}`,
     onclick: () => {
-      state.tag = state.tag === t.name ? null : t.name; // click again to clear
+      state.tag = isCurrent(t) ? null : t.name; // click again to clear
       syncUrl(); renderTags(); updateHeading(); renderList();
     },
   }, `#${t.name}`)));

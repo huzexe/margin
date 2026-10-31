@@ -13,6 +13,7 @@ On Windows, "python" may be "py" instead. run.sh (Linux/macOS) and run.bat (Wind
 import argparse
 import os
 import shutil
+import socket
 import subprocess
 import sys
 import time
@@ -62,6 +63,12 @@ def server_up() -> bool:
             return True
     except (urllib.error.URLError, OSError):
         return False
+
+
+def port_in_use() -> bool:
+    """Something (Margin or another program) is listening on Margin's port."""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        return s.connect_ex(("127.0.0.1", port())) == 0
 
 
 def venv_python(windowless: bool = False) -> Path:
@@ -242,6 +249,10 @@ def app_mode() -> int:
         error_box(str(e))
         return 1
     if not server_up():
+        if port_in_use():
+            error_box(f"Another program is using port {port()}, so Margin can't start. Close that program, "
+                      f"or add a line like MARGIN_PORT=8001 to Margin's .env file.")
+            return 1
         notify("Starting…")
         proc = start_background()
         deadline = time.time() + 120
@@ -280,7 +291,8 @@ def close_windows() -> None:
                             f"'*--user-data-dir={match}*' }} | ForEach-Object {{ Stop-Process -Id $_.ProcessId -Force }}"],
                            timeout=20, capture_output=True)
         elif shutil.which("pkill"):
-            subprocess.run(["pkill", "-f", f"--user-data-dir={profile}"], timeout=10)
+            # "--" so pkill doesn't read the pattern, which starts with "--", as one of its options
+            subprocess.run(["pkill", "-f", "--", f"--user-data-dir={profile}"], timeout=10)
     except (OSError, subprocess.SubprocessError):
         pass
 

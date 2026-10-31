@@ -49,7 +49,7 @@ async function makePdf() {
   try {
     res = await fetch(`/api/notes/${noteId}/pdf?${settings()}`);
   } catch {
-    if (id === requestId) showError("Can't reach Margin. Check that the app is still running in the terminal.");
+    if (id === requestId) showError("Can't reach Margin. It may have stopped; open it again and retry.");
     return;
   }
   if (id !== requestId) return; // settings changed meanwhile; a newer preview is on its way
@@ -75,6 +75,10 @@ async function makePdf() {
 }
 
 function showError(message) {
+  // Drop the previous preview: it was made with other settings, so Download must not save it
+  if (pdfUrl) URL.revokeObjectURL(pdfUrl);
+  pdfUrl = null;
+  $('open-preview').hidden = true;
   setBusy(false);
   $('preview').hidden = true;
   $('preview-status').hidden = false;

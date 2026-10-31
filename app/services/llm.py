@@ -106,8 +106,8 @@ def generate_json(
             except errors.APIError as e:
                 log.warning("model %s failed: %s %s", model, e.code, e.message)
                 last_error = _map_api_error(e)
-                if last_error.status == 503 and last_error.message == MSG_BUSY:
-                    break  # overloaded: try the fallback model
+                if last_error.status == 429 or last_error.message == MSG_BUSY:
+                    break  # overloaded or out of quota: the fallback model has its own limits
                 raise last_error
             except LLMError:
                 raise

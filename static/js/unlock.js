@@ -6,8 +6,12 @@ const submit = document.getElementById('unlock-submit');
 
 // Only go back to a page on this site
 function nextPage() {
-  const next = new URLSearchParams(location.search).get('next') || '/';
-  return next.startsWith('/') && !next.startsWith('//') ? next : '/';
+  // Let the browser resolve it, so tricks like "/\other-site.com" (read as //other-site.com) are caught
+  try {
+    const next = new URL(new URLSearchParams(location.search).get('next') || '/', location.origin);
+    if (next.origin === location.origin) return next.pathname + next.search + next.hash;
+  } catch { /* not a valid address */ }
+  return '/';
 }
 
 form.addEventListener('submit', async e => {

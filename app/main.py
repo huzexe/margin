@@ -45,7 +45,8 @@ async def require_pin(request: Request, call_next):
         return await call_next(request)
     if path.startswith("/api/"):
         return JSONResponse({"detail": "Locked. Reload the page and enter the PIN."}, status_code=401)
-    return RedirectResponse(f"/unlock?next={quote(path)}", status_code=303)
+    target = f"{path}?{request.url.query}" if request.url.query else path  # e.g. /notes/new?subject=3
+    return RedirectResponse(f"/unlock?next={quote(target, safe='/')}", status_code=303)
 
 CSP = (
     "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; "

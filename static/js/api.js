@@ -18,7 +18,7 @@ export async function api(path, { method = 'GET', body, keepalive = false } = {}
   try {
     res = await fetch(path, options);
   } catch {
-    throw new ApiError("Can't reach Margin. Check that the app is still running in the terminal.", 0);
+    throw new ApiError("Can't reach Margin. It may have stopped; open it again and retry.", 0);
   }
 
   if (res.status === 204) return null;

@@ -99,7 +99,11 @@ $('restore-file').addEventListener('change', async () => {
     restorePanel(errorNotice("This isn't a Margin backup", 'Choose a file made with Download backup (it ends in .json).'));
     return;
   }
+  showChoice(data);
+});
 
+// What to do with the chosen backup (also where "Back" returns to from the Replace confirmation)
+function showChoice(data) {
   const when = data.exported_at ? new Date(data.exported_at).toLocaleString() : 'an unknown date';
   const n = data.notes.length, s = (data.subjects || []).length;
   restorePanel(el('div', { class: 'confirm-panel restore-choice' },
@@ -109,19 +113,23 @@ $('restore-file').addEventListener('change', async () => {
         el('button', { class: 'btn btn-primary btn-sm', type: 'button', onclick: () => restore('merge') }, 'Add to my library'),
         el('p', { class: 'field-hint' }, 'Keeps your current notes and adds the ones from the backup. Restoring the same backup twice creates copies.')),
       el('div', {},
-        el('button', { class: 'btn btn-danger btn-sm', type: 'button', onclick: confirmReplace }, 'Replace everything'),
+        el('button', { class: 'btn btn-danger btn-sm', type: 'button', onclick: () => confirmReplace(data) }, 'Replace everything'),
         el('p', { class: 'field-hint' }, 'Deletes all current notes and subjects, then loads the backup.')),
     ),
-    el('button', { class: 'link-button', type: 'button', onclick: () => { restorePanel(); $('restore-file-name').textContent = ''; } }, 'Cancel'),
+    el('button', { class: 'link-button', type: 'button', onclick: () => {
+      backupText = null;
+      restorePanel();
+      $('restore-file-name').textContent = '';
+    } }, 'Cancel'),
   ));
-});
+}
 
-function confirmReplace() {
+function confirmReplace(data) {
   restorePanel(el('div', { class: 'confirm-inline', role: 'alertdialog' },
     el('p', {}, "Delete all current notes and subjects and replace them with the backup? This can't be undone. Download a backup of your current library first if you might need it."),
     el('div', { class: 'confirm-actions' },
       el('button', { class: 'btn btn-danger btn-sm', type: 'button', onclick: () => restore('replace') }, 'Delete and replace'),
-      el('button', { class: 'btn btn-ghost btn-sm', type: 'button', onclick: () => $('restore-file').dispatchEvent(new Event('change')) }, 'Back'),
+      el('button', { class: 'btn btn-ghost btn-sm', type: 'button', onclick: () => showChoice(data) }, 'Back'),
     ),
   ));
 }
@@ -135,7 +143,7 @@ async function restore(mode) {
       method: 'POST', headers: { 'Content-Type': 'application/json' }, body: backupText,
     });
   } catch {
-    restorePanel(errorNotice("Couldn't restore", "Can't reach Margin. Check that the app is still running in the terminal."));
+    restorePanel(errorNotice("Couldn't restore", "Can't reach Margin. It may have stopped; open it again and retry."));
     return;
   }
   const data = await res.json().catch(() => null);

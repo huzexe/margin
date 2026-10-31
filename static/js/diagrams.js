@@ -112,8 +112,11 @@ export function diagramOutline(code) {
   return labels;
 }
 
-// Re-render diagrams when the theme changes
+// Re-render diagrams when the theme changes. Returns a function that stops listening.
 export function onThemeChange(fn) {
-  new MutationObserver(fn).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
-  matchMedia('(prefers-color-scheme: dark)').addEventListener('change', fn);
+  const observer = new MutationObserver(fn);
+  observer.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+  const media = matchMedia('(prefers-color-scheme: dark)');
+  media.addEventListener('change', fn);
+  return () => { observer.disconnect(); media.removeEventListener('change', fn); };
 }

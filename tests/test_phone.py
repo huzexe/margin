@@ -80,3 +80,10 @@ def test_phone_access_off_by_default(tmp_path, monkeypatch):
     with phone(app) as p:
         assert p.get("/api/notes").status_code == 401
         assert p.post("/api/unlock", json={"pin": "anything"}).status_code == 403
+
+
+def test_unlock_keeps_the_page_address(app_with_phone):
+    # The full address (with ?subject=…) survives the trip through the PIN page
+    with phone(app_with_phone) as p:
+        r = p.get("/notes/new?subject=3", follow_redirects=False)
+        assert r.status_code == 303 and r.headers["location"] == "/unlock?next=/notes/new%3Fsubject%3D3"

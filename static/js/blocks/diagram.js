@@ -49,7 +49,8 @@ export class Diagram {
     }
 
     this.draw();
-    onThemeChange(() => { if (this.canvas.isConnected) this.draw(); });
+    // Stop listening once this block is gone (replaced by a regenerate, undo or new content)
+    const stop = onThemeChange(() => { if (this.canvas.isConnected) this.draw(); else stop(); });
     if (this.isNew && !this.readOnly) queueMicrotask(() => this.toggleEditor(true));
     return figure;
   }

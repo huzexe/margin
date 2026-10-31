@@ -116,3 +116,25 @@ def test_app_mode_starts_opens_and_stops(tmp_path):
         time.sleep(0.3)
     assert not _up(port), "--quit should stop Margin"
     assert time.time() - t < 90
+
+
+def test_quit_closes_windows_on_linux(monkeypatch):
+    # The pattern starts with "--", so pkill must get "--" first or it reads it as an option
+    runs = []
+    monkeypatch.setattr(start, "WINDOWS", False)
+    monkeypatch.setattr(start.shutil, "which", lambda name: "/usr/bin/" + name)
+    monkeypatch.setattr(start.subprocess, "run", lambda args, **kw: runs.append(args))
+    start.close_windows()
+    assert runs == [["pkill", "-f", "--", f"--user-data-dir={start.profile_dir()}"]]
+
+
+def test_app_mode_explains_a_busy_port(monkeypatch):
+    shown = []
+    monkeypatch.setattr(start, "needs_setup", lambda: False)
+    monkeypatch.setattr(start, "setup", lambda quiet=False: None)
+    monkeypatch.setattr(start, "server_up", lambda: False)  # not Margin answering…
+    monkeypatch.setattr(start, "port_in_use", lambda: True)  # …but something holds the port
+    monkeypatch.setattr(start, "start_background", lambda: pytest.fail("must not start a second server"))
+    monkeypatch.setattr(start, "error_box", shown.append)
+    assert start.app_mode() == 1
+    assert "Another program is using port" in shown[0] and "MARGIN_PORT" in shown[0]

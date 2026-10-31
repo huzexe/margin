@@ -350,7 +350,7 @@ async function postJSON(path, body, signal) {
     });
   } catch (err) {
     if (err.name === 'AbortError') throw err;
-    throw new ApiError("Can't reach Margin. Check that the app is still running in the terminal.", 0);
+    throw new ApiError("Can't reach Margin. It may have stopped; open it again and retry.", 0);
   }
   const data = await res.json().catch(() => null);
   if (!res.ok) throw new ApiError(data?.detail || `Something went wrong (error ${res.status}).`, res.status);

@@ -270,7 +270,14 @@ a.btn-primary:hover { color: var(--on-primary); }
   gap: var(--s6);
   align-items: start;
 }
-.sidebar { position: sticky; top: calc(var(--topbar-h) + var(--s5)); padding-top: var(--s2); }
+/* Stays in view while the notes scroll; scrolls on its own when there are many subjects and tags */
+.sidebar {
+  position: sticky;
+  top: calc(var(--topbar-h) + var(--s5));
+  max-height: calc(100vh - var(--topbar-h) - 2 * var(--s5));
+  overflow-y: auto;
+  padding: var(--s2) 4px; /* room for the selected subject's outline */
+}
 .sidebar-title {
   padding: 0 var(--s3) var(--s2);
   font-size: var(--text-xs);
@@ -677,7 +684,7 @@ a.btn-primary:hover { color: var(--on-primary); }
   .workspace[data-tab="enhanced"] .pane-rough { display: none; }
   .note-header { grid-template-columns: 1fr 1fr; }
   .library { grid-template-columns: 1fr; gap: var(--s5); }
-  .sidebar { position: static; padding: var(--s3); border: 1px solid var(--rule); border-radius: var(--radius-lg); background: var(--surface); }
+  .sidebar { position: static; max-height: none; overflow: visible; padding: var(--s3); border: 1px solid var(--rule); border-radius: var(--radius-lg); background: var(--surface); }
 }
 
 @media (max-width: 560px) {
